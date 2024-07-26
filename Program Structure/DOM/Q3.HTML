@@ -24,12 +24,11 @@
       }
     </style>
   </head>
-
   <body>
     <div class="hat">
-      <img src="./HAT.jpeg" id="cat" />
+      <img src="hat.png" id="cat" />
     </div>
-    <div clas="cat"><img src="CAT.JPEG" id="hat" /></div>
+    <div clas="cat"><img src="cat.png" id="hat" /></div>
 
     <script>
       let cat = document.querySelector("#cat");
@@ -48,22 +47,22 @@
         lastTime = time;
 
         // Center point coordinates for the cat
-        const catCenterX = 200;
-        const catCenterY = 200;
-        const HatCenterX = 100;
-        const HatCenterY = 200;
+        const catCenterX = 600;
+        const catCenterY = 500;
+        const HatCenterX = 500;
+        const HatCenterY = 600;
 
         // Animate the cat orbiting around a central point
-        cat.style.top = Math.sin(angle) * 50 + catCenterY - 100 + "px";
+        cat.style.top = Math.sin(angle) * 250 + catCenterY - 100 + "px";
         cat.style.left = Math.cos(angle) * 200 + catCenterX - 100 + "px";
-
+        /*  80 200*/
         // Animate the hat orbiting around the cat
         const catTop = parseFloat(cat.style.top);
         const catLeft = parseFloat(cat.style.left);
 
-        hat.style.top = Math.sin(angle) * 100 + catCenterY - 100 + "px";
-        hat.style.left = Math.cos(angle) * 300 + catCenterX - 50 + "px";
-
+        hat.style.top = Math.sin(angle) * 150 + catCenterY - 100 + "px";
+        hat.style.left = Math.cos(angle) * 350 + catCenterX - 50 + "px";
+        /* 150 350*/
         requestAnimationFrame(animate);
       }
 

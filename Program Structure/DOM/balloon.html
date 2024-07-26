@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Balloon Animation</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .balloon_div {
+        text-align: center;
+        padding: 20%;
+        height: 100vh;
+        font-size: 50;
+        /* Initial font size */
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="balloon_div">🎈</div>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const balloonContainer = document.querySelector(".balloon_div");
+      const balloon = balloonContainer.textContent;
+      let fontSize = 50;
+      const maxSize = 60;
+
+      document.addEventListener("keydown", (event) => {
+        if (balloonContainer.textContent !== balloon) {
+          return;
+        }
+
+        if (event.key === "ArrowUp") {
+          fontSize *= 1.1;
+          if (fontSize > maxSize) {
+            balloonContainer.textContent = "💥";
+            document.removeEventListener("keydown", arguments.callee); //arguments.callee to renove event completely
+          }
+        } else if (event.key === "ArrowDown") {
+          fontSize *= 0.9;
+        }
+
+        balloonContainer.style.fontSize = fontSize + "px";
+      });
+    });
+  </script>
+</html>
