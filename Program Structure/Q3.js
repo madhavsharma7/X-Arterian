@@ -1,15 +1,28 @@
-let grid=8;
-let chestboard='';
+function generateChessboard(width, height) {
+  let chessboard = '';
 
-for(let row=0;row<=grid;row++){
-    for(let col=0;col<grid;col++){
-        if((row+col)%2===0){
-            chestboard+=' ';
-        }
-        else{
-            chestboard+='#';
-        }
+  for (let i = 0; i < height; i++) {
+    for (let j = 0; j < width; j++) {
+      // Determine if the current cell should be "#" or " "
+      chessboard += (i + j) % 2 === 0 ? '#' : ' ';
     }
-    chestboard+='\n';
+    // Add a newline character to move to the next row
+    chessboard += '\n';
+  }
+
+  return chessboard;
 }
-console.log(chestboard);
+
+// Get width and height from user
+let width = prompt("Enter the width of the chessboard:");
+width = Number.parseInt(width);
+let height = prompt("Enter the height of the chessboard:");
+height = Number.parseInt(height);
+
+// Check if width and height are valid numbers
+if (isNaN(width) || isNaN(height) || width <= 0 || height <= 0) {
+  console.log("Please enter valid positive numbers for width and height.");
+} else {
+  // Generate and display the chessboard
+  console.log(generateChessboard(width, height));
+}

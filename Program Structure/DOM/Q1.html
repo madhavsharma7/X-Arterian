@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mountains Table</title>
+  </head>
+  <body>
+    <h1>Mountains</h1>
+    <div id="mountains"></div>
+
+    <script>
+      const MOUNTAINS = [
+        { name: "Kilimanjaro", height: 5895, place: "Tanzania" },
+        { name: "Everest", height: 8848, place: "Nepal" },
+        { name: "Mount Fuji", height: 3776, place: "Japan" },
+        { name: "Vaalserberg", height: 323, place: "Netherlands" },
+        { name: "Denali", height: 6168, place: "United States" },
+        { name: "Popocatepetl", height: 5465, place: "Mexico" },
+        { name: "Mont Blanc", height: 4808, place: "Italy/France" },
+      ];
+
+      // Function to create the table
+      function createTable(data) {
+        if (data.length === 0) return;
+
+        // Create the table and header row
+        const table = document.createElement("table");
+        const headerRow = document.createElement("tr");
+
+        // Create header cells
+        Object.keys(data[0]).forEach((key) => {
+          const th = document.createElement("th");
+          th.textContent = key;
+          headerRow.appendChild(th);
+        });
+        table.appendChild(headerRow);
+
+        // Create rows for each data object
+        data.forEach((item) => {
+          const row = document.createElement("tr");
+          Object.values(item).forEach((value) => {
+            const td = document.createElement("td");
+            td.textContent = value;
+
+            // Right-align numerical values
+            if (typeof value === "number") {
+              td.style.textAlign = "right";
+            }
+
+            row.appendChild(td);
+          });
+          table.appendChild(row);
+        });
+
+        return table;
+      }
+
+      // Append the table to the DOM
+      document.getElementById("mountains").appendChild(createTable(MOUNTAINS));
+    </script>
+  </body>
+</html>

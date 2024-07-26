@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cat and Hat Animation</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+
+      img {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+      }
+
+      .hat {
+        position: relative;
+      }
+      .cat {
+        position: relative;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="hat">
+      <img src="./HAT.jpeg" id="cat" />
+    </div>
+    <div clas="cat"><img src="CAT.JPEG" id="hat" /></div>
+
+    <script>
+      let cat = document.querySelector("#cat");
+      let hat = document.querySelector("#hat");
+
+      let angle = 0;
+      let hatAngle = 0;
+      let lastTime = null;
+
+      function animate(time) {
+        if (lastTime != null) {
+          let deltaTime = (time - lastTime) * 0.001;
+          angle += deltaTime;
+          hatAngle += deltaTime * 2; // Hat moves faster than the cat
+        }
+        lastTime = time;
+
+        // Center point coordinates for the cat
+        const catCenterX = 200;
+        const catCenterY = 200;
+        const HatCenterX = 100;
+        const HatCenterY = 200;
+
+        // Animate the cat orbiting around a central point
+        cat.style.top = Math.sin(angle) * 50 + catCenterY - 100 + "px";
+        cat.style.left = Math.cos(angle) * 200 + catCenterX - 100 + "px";
+
+        // Animate the hat orbiting around the cat
+        const catTop = parseFloat(cat.style.top);
+        const catLeft = parseFloat(cat.style.left);
+
+        hat.style.top = Math.sin(angle) * 100 + catCenterY - 100 + "px";
+        hat.style.left = Math.cos(angle) * 300 + catCenterX - 50 + "px";
+
+        requestAnimationFrame(animate);
+      }
+
+      requestAnimationFrame(animate);
+    </script>
+  </body>
+</html>
