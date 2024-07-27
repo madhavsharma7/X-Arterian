@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas width="600" height="400"></canvas>
+  </body>
+  <script>
+    let cx = document.querySelector("canvas").getContext("2d");
+
+    function drawTrapezoid(cx, x, y, topWidth, bottomWidth, height) {
+      cx.beginPath();
+      cx.moveTo(x, y);
+      cx.lineTo(x + topWidth, y);
+      cx.lineTo(x + bottomWidth, y + height);
+      cx.lineTo(x - (bottomWidth - topWidth), y + height);
+      cx.closePath();
+      cx.stroke();
+    }
+
+    function drawDiamond(cx, x, y, width, height) {
+      cx.save();
+      cx.translate(x, y);
+      cx.rotate(Math.PI / 4);
+      cx.fillStyle = "red";
+      cx.fillRect(-width / 2, -height / 2, width, height);
+      cx.restore();
+    }
+
+    function drawZigzag(cx, x, y, segments, segmentLength) {
+      cx.beginPath();
+      cx.moveTo(x, y);
+      for (let i = 0; i < segments; i++) {
+        x += segmentLength * (i % 2 == 0 ? 1 : -1);
+        y += segmentLength;
+        cx.lineTo(x, y);
+      }
+      cx.stroke();
+    }
+
+    function drawSpiral(cx, x, y, segments, radiusIncrement) {
+      cx.beginPath();
+      let angle = 0;
+      for (let i = 0; i < segments; i++) {
+        let radius = radiusIncrement * i;
+        let xPos = x + radius * Math.cos(angle);
+        let yPos = y + radius * Math.sin(angle);
+        cx.lineTo(xPos, yPos);
+        angle += Math.PI / 15;
+      }
+      cx.stroke();
+    }
+
+    function drawStar(cx, x, y, points, outerRadius, innerRadius) {
+      cx.beginPath();
+      cx.moveTo(x, y - outerRadius);
+      for (let i = 0; i < points * 2; i++) {
+        let angle = (i * Math.PI) / points;
+        let radius = i % 2 === 0 ? outerRadius : innerRadius;
+        cx.lineTo(x + radius * Math.sin(angle), y - radius * Math.cos(angle));
+      }
+      cx.closePath();
+      cx.fillStyle = "orange";
+      cx.fill();
+      cx.stroke();
+    }
+
+    drawTrapezoid(cx, 50, 50, 60, 100, 60);
+
+    drawDiamond(cx, 200, 80, 50, 50);
+
+    drawZigzag(cx, 30, 200, 8, 20);
+
+    drawSpiral(cx, 350, 120, 100, 1);
+
+    drawStar(cx, 520, 100, 8, 20, 54);
+  </script>
+</html>

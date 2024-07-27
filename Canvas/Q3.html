@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas width="400" height="400"></canvas>
+    <script>
+      let cx = document.querySelector("canvas").getContext("2d");
+
+      // Ball properties
+      let ball = {
+        x: 200, // Initial x position
+        y: 200, // Initial y position
+        radius: 50, // Radius of the ball
+        dx: 150, // Velocity in x direction (pixels per second)
+        dy: 100, // Velocity in y direction (pixels per second)
+      };
+
+      let lastTime = null;
+
+      function frame(time) {
+        if (lastTime != null) {
+          updateAnimation(Math.min(100, time - lastTime) / 1000);
+        }
+        lastTime = time;
+        requestAnimationFrame(frame);
+      }
+
+      requestAnimationFrame(frame);
+
+      function updateAnimation(step) {
+        // Update ball position
+        ball.x += ball.dx * step;
+        ball.y += ball.dy * step;
+
+        // Check for collision with left or right wall
+        if (
+          ball.x - ball.radius < 0 ||
+          ball.x + ball.radius > cx.canvas.width
+        ) {
+          ball.dx = -ball.dx; // Reverse direction
+        }
+
+        // Check for collision with top or bottom wall
+        if (
+          ball.y - ball.radius < 0 ||
+          ball.y + ball.radius > cx.canvas.height
+        ) {
+          ball.dy = -ball.dy; // Reverse direction
+        }
+
+        // Clear the canvas
+        cx.clearRect(0, 0, cx.canvas.width, cx.canvas.height);
+
+        // Draw the ball
+        cx.beginPath();
+        cx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+        cx.fillStyle = "red";
+        cx.fill();
+        cx.closePath();
+      }
+    </script>
+  </body>
+</html>

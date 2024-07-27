@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas width="600" height="300"></canvas>
+</body>
+
+<script>
+  let cx = document.querySelector("canvas").getContext("2d");
+
+  // Example data, replace with your actual data
+  let results = [
+
+    { count: 20, color: "red", label: "Category A" },
+    { count: 40, color: "blue", label: "Category B" },
+    { count: 30, color: "green", label: "Category C" },
+    { count: 10, color: "yellow", label: "Category D" },
+  ];
+
+  let total = results.reduce((sum, { count }) => sum + count, 0);
+  let currentAngle = -0.5 * Math.PI;
+  let centerX = 300,
+    centerY = 160;
+  let radius = 100;
+  let labelOffset = 50; // Distance from the center to position the label
+
+  // Draw pie slices and labels
+  for (let result of results) {
+    let sliceAngle = (result.count / total) * 2 * Math.PI;
+
+    // Draw the pie slice
+    cx.beginPath();
+    cx.arc(centerX, centerY, radius, currentAngle, currentAngle + sliceAngle);
+    cx.lineTo(centerX, centerY);
+    cx.fillStyle = result.color;
+    cx.fill();
+
+    // Calculate label position
+    let midAngle = currentAngle + sliceAngle / 2;
+    let labelX = centerX + (radius + labelOffset) * Math.cos(midAngle);
+    let labelY = centerY + (radius + labelOffset) * Math.sin(midAngle);
+
+    // Draw the label
+    cx.fillStyle = "black";
+    cx.font = "15px Arial";
+    cx.textAlign = "center";
+    cx.textBaseline = "middle";
+    cx.fillText(result.label, labelX, labelY);
+
+    // Update current angle
+    currentAngle += sliceAngle;
+
+  }
+</script>
+
+</html>
