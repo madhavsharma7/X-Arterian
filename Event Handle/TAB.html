@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .tab-button {
+        padding: 5px 10px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        background-color: #f0f0f0;
+        border-radius: 3px 3px 0 0;
+        margin-right: 2px;
+      }
+      .tab-button.active {
+        background-color: #fff;
+        border-bottom: none;
+      }
+      .tab-content {
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 0 3px 3px 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <tab-panel>
+      <div data-tabname="One" class="tab-content">Tab one</div>
+      <div data-tabname="Two" class="tab-content" style="display: none">
+        Tab two
+      </div>
+      <div data-tabname="Three" class="tab-content" style="display: none">
+        Tab three
+      </div>
+    </tab-panel>
+  </body>
+  <script>
+    function asTabs(node) {
+      const tabs = Array.from(node.children);
+      const buttonContainer = document.createElement("div");
+
+      tabs.forEach((tab, index) => {
+        const button = document.createElement("button");
+        button.textContent = tab.getAttribute("data-tabname");
+        button.className = "tab-button";
+        if (index === 0) button.classList.add("active");
+
+        button.addEventListener("click", () => {
+          tabs.forEach((t, i) => {
+            t.style.display = i === index ? "" : "none";
+            buttons[i].classList.toggle("active", i === index);
+          });
+        });
+
+        buttonContainer.appendChild(button);
+      });
+
+      const buttons = buttonContainer.children;
+      node.insertBefore(buttonContainer, node.firstChild);
+      tabs[0].style.display = "";
+    }
+
+    asTabs(document.querySelector("tab-panel"));
+  </script>
+</html>
