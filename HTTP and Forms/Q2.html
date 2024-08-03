@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Code Runner</title>
+  </head>
+  <body>
+    <textarea id="code">return "hi";</textarea>
+    <button id="button">Run</button>
+    <pre id="output"></pre>
+
+    <script>
+      document.getElementById("button").addEventListener("click", () => {
+        // Get the code from the textarea
+        const code = document.getElementById("code").value;
+        const outputElement = document.getElementById("output");
+
+        try {
+          // Create a new function using the Function constructor
+          const func = new Function(code);
+
+          // Execute the function and get the result
+          const result = func();
+
+          // Display the result in the output element
+          outputElement.textContent = String(result);
+        } catch (error) {
+          // Display any error that occurs during execution
+          outputElement.textContent = `Error: ${error.message}`;
+        }
+      });
+    </script>
+  </body>
+</html>
